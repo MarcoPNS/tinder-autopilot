@@ -24,11 +24,11 @@ Partial Class MainViewer
     Private Sub InitializeComponent()
         Me.MetroTabControl1 = New MetroFramework.Controls.MetroTabControl()
         Me.MetroTabPage1 = New MetroFramework.Controls.MetroTabPage()
+        Me.MetroListView1 = New MetroFramework.Controls.MetroListView()
+        Me.MetroLabel1 = New MetroFramework.Controls.MetroLabel()
         Me.MetroTabPage2 = New MetroFramework.Controls.MetroTabPage()
         Me.MetroTabPage3 = New MetroFramework.Controls.MetroTabPage()
         Me.MetroToggle1 = New MetroFramework.Controls.MetroToggle()
-        Me.MetroLabel1 = New MetroFramework.Controls.MetroLabel()
-        Me.MetroListView1 = New MetroFramework.Controls.MetroListView()
         Me.MetroTabControl1.SuspendLayout()
         Me.MetroTabPage1.SuspendLayout()
         Me.SuspendLayout()
@@ -60,6 +60,27 @@ Partial Class MainViewer
         Me.MetroTabPage1.VerticalScrollbarBarColor = True
         Me.MetroTabPage1.VerticalScrollbarHighlightOnWheel = False
         Me.MetroTabPage1.VerticalScrollbarSize = 10
+        '
+        'MetroListView1
+        '
+        Me.MetroListView1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.MetroListView1.FullRowSelect = True
+        Me.MetroListView1.Location = New System.Drawing.Point(3, 118)
+        Me.MetroListView1.Name = "MetroListView1"
+        Me.MetroListView1.OwnerDraw = True
+        Me.MetroListView1.Size = New System.Drawing.Size(176, 208)
+        Me.MetroListView1.TabIndex = 3
+        Me.MetroListView1.UseCompatibleStateImageBehavior = False
+        Me.MetroListView1.UseSelectable = True
+        '
+        'MetroLabel1
+        '
+        Me.MetroLabel1.AutoSize = True
+        Me.MetroLabel1.Location = New System.Drawing.Point(3, 96)
+        Me.MetroLabel1.Name = "MetroLabel1"
+        Me.MetroLabel1.Size = New System.Drawing.Size(102, 19)
+        Me.MetroLabel1.TabIndex = 2
+        Me.MetroLabel1.Text = "Additional Filter"
         '
         'MetroTabPage2
         '
@@ -98,27 +119,6 @@ Partial Class MainViewer
         Me.MetroToggle1.TabIndex = 1
         Me.MetroToggle1.Text = "Aus"
         Me.MetroToggle1.UseSelectable = True
-        '
-        'MetroLabel1
-        '
-        Me.MetroLabel1.AutoSize = True
-        Me.MetroLabel1.Location = New System.Drawing.Point(3, 96)
-        Me.MetroLabel1.Name = "MetroLabel1"
-        Me.MetroLabel1.Size = New System.Drawing.Size(102, 19)
-        Me.MetroLabel1.TabIndex = 2
-        Me.MetroLabel1.Text = "Additional Filter"
-        '
-        'MetroListView1
-        '
-        Me.MetroListView1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.MetroListView1.FullRowSelect = True
-        Me.MetroListView1.Location = New System.Drawing.Point(3, 118)
-        Me.MetroListView1.Name = "MetroListView1"
-        Me.MetroListView1.OwnerDraw = True
-        Me.MetroListView1.Size = New System.Drawing.Size(176, 208)
-        Me.MetroListView1.TabIndex = 3
-        Me.MetroListView1.UseCompatibleStateImageBehavior = False
-        Me.MetroListView1.UseSelectable = True
         '
         'MainViewer
         '
