@@ -19,6 +19,11 @@ Public Class MainViewer
     End Sub
 
     Private Sub FireSwitched(sender As Object, e As EventArgs) Handles FireSwitch.CheckedChanged
+        If LoggedIn = False Then
+            FireSwitch.Checked = False
+            Log("Can't start Autopilot. Please auth your account.")
+            Return
+        End If
         If FireSwitch.Checked = True Then
             OnFire.Visible = True
             TinderWorker.RunWorkerAsync()
@@ -31,7 +36,11 @@ Public Class MainViewer
         Try
             If Not TinderAuthBox.Text = "" Then
                 AuthWithTinderToken()
-
+                FacebookAccIDBox.Enabled = False
+                FacebookAuthBox.Enabled = False
+                TinderAuthBox.Enabled = False
+                SaveAuth.Enabled = False
+                LoggedIn = True
                 Return
             ElseIf Not FacebookAuthBox.Text = "" Then
                 If FacebookAccIDBox.Text = "" Then
@@ -85,7 +94,16 @@ Public Class MainViewer
         End Try
     End Sub
 
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles StatusLabel.Click
+    Private Sub AddTagSwitch(sender As Object, e As EventArgs) Handles AddTagBox.TextChanged
+        If Not AddTagBox.Text = "" Then
+            AddTagButton.Enabled = True
+        Else
+            AddTagButton.Enabled = False
+        End If
+    End Sub
 
+    Private Sub AddTagButton_Click(sender As Object, e As EventArgs) Handles AddTagButton.Click
+        TagListView.Items.Add(AddTagBox.Text)
+        AddTagBox.Clear()
     End Sub
 End Class

@@ -25,6 +25,12 @@ Partial Class MainViewer
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainViewer))
         Me.MetroTabControl1 = New MetroFramework.Controls.MetroTabControl()
         Me.MetroTabPage1 = New MetroFramework.Controls.MetroTabPage()
+        Me.CurrentUserLabel = New MetroFramework.Controls.MetroLabel()
+        Me.AddTagBox = New MetroFramework.Controls.MetroTextBox()
+        Me.MetroLabel5 = New MetroFramework.Controls.MetroLabel()
+        Me.MetroButton3 = New MetroFramework.Controls.MetroButton()
+        Me.MetroButton2 = New MetroFramework.Controls.MetroButton()
+        Me.AddTagButton = New MetroFramework.Controls.MetroButton()
         Me.FacebookAccIDBox = New MetroFramework.Controls.MetroTextBox()
         Me.MetroLabel4 = New MetroFramework.Controls.MetroLabel()
         Me.SaveAuth = New MetroFramework.Controls.MetroButton()
@@ -32,7 +38,6 @@ Partial Class MainViewer
         Me.MetroLabel3 = New MetroFramework.Controls.MetroLabel()
         Me.FacebookAuthBox = New MetroFramework.Controls.MetroTextBox()
         Me.MetroLabel2 = New MetroFramework.Controls.MetroLabel()
-        Me.TagListView = New MetroFramework.Controls.MetroListView()
         Me.MetroLabel1 = New MetroFramework.Controls.MetroLabel()
         Me.MetroTabPage2 = New MetroFramework.Controls.MetroTabPage()
         Me.MetroTabPage3 = New MetroFramework.Controls.MetroTabPage()
@@ -41,12 +46,7 @@ Partial Class MainViewer
         Me.TinderWorker = New System.ComponentModel.BackgroundWorker()
         Me.OnFire = New System.Windows.Forms.PictureBox()
         Me.StatusLabel = New System.Windows.Forms.Label()
-        Me.MetroButton1 = New MetroFramework.Controls.MetroButton()
-        Me.MetroButton2 = New MetroFramework.Controls.MetroButton()
-        Me.MetroButton3 = New MetroFramework.Controls.MetroButton()
-        Me.MetroLabel5 = New MetroFramework.Controls.MetroLabel()
-        Me.CurrentUserLabel = New MetroFramework.Controls.MetroLabel()
-        Me.MetroTextBox1 = New MetroFramework.Controls.MetroTextBox()
+        Me.TagListView = New System.Windows.Forms.ListBox()
         Me.MetroTabControl1.SuspendLayout()
         Me.MetroTabPage1.SuspendLayout()
         Me.MetroTabPage3.SuspendLayout()
@@ -68,10 +68,13 @@ Partial Class MainViewer
         '
         'MetroTabPage1
         '
-        Me.MetroTabPage1.Controls.Add(Me.MetroTextBox1)
+        Me.MetroTabPage1.Controls.Add(Me.TagListView)
+        Me.MetroTabPage1.Controls.Add(Me.CurrentUserLabel)
+        Me.MetroTabPage1.Controls.Add(Me.AddTagBox)
+        Me.MetroTabPage1.Controls.Add(Me.MetroLabel5)
         Me.MetroTabPage1.Controls.Add(Me.MetroButton3)
         Me.MetroTabPage1.Controls.Add(Me.MetroButton2)
-        Me.MetroTabPage1.Controls.Add(Me.MetroButton1)
+        Me.MetroTabPage1.Controls.Add(Me.AddTagButton)
         Me.MetroTabPage1.Controls.Add(Me.FacebookAccIDBox)
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel4)
         Me.MetroTabPage1.Controls.Add(Me.SaveAuth)
@@ -79,7 +82,6 @@ Partial Class MainViewer
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel3)
         Me.MetroTabPage1.Controls.Add(Me.FacebookAuthBox)
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel2)
-        Me.MetroTabPage1.Controls.Add(Me.TagListView)
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel1)
         Me.MetroTabPage1.HorizontalScrollbarBarColor = True
         Me.MetroTabPage1.HorizontalScrollbarHighlightOnWheel = False
@@ -92,6 +94,83 @@ Partial Class MainViewer
         Me.MetroTabPage1.VerticalScrollbarBarColor = True
         Me.MetroTabPage1.VerticalScrollbarHighlightOnWheel = False
         Me.MetroTabPage1.VerticalScrollbarSize = 10
+        '
+        'CurrentUserLabel
+        '
+        Me.CurrentUserLabel.AutoSize = True
+        Me.CurrentUserLabel.Location = New System.Drawing.Point(87, 286)
+        Me.CurrentUserLabel.Name = "CurrentUserLabel"
+        Me.CurrentUserLabel.Size = New System.Drawing.Size(112, 19)
+        Me.CurrentUserLabel.TabIndex = 5
+        Me.CurrentUserLabel.Text = ">Not Logged in<"
+        '
+        'AddTagBox
+        '
+        '
+        '
+        '
+        Me.AddTagBox.CustomButton.Image = Nothing
+        Me.AddTagBox.CustomButton.Location = New System.Drawing.Point(110, 1)
+        Me.AddTagBox.CustomButton.Name = ""
+        Me.AddTagBox.CustomButton.Size = New System.Drawing.Size(21, 21)
+        Me.AddTagBox.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
+        Me.AddTagBox.CustomButton.TabIndex = 1
+        Me.AddTagBox.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
+        Me.AddTagBox.CustomButton.UseSelectable = True
+        Me.AddTagBox.CustomButton.Visible = False
+        Me.AddTagBox.Lines = New String(-1) {}
+        Me.AddTagBox.Location = New System.Drawing.Point(3, 75)
+        Me.AddTagBox.MaxLength = 32767
+        Me.AddTagBox.Name = "AddTagBox"
+        Me.AddTagBox.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
+        Me.AddTagBox.ScrollBars = System.Windows.Forms.ScrollBars.None
+        Me.AddTagBox.SelectedText = ""
+        Me.AddTagBox.SelectionLength = 0
+        Me.AddTagBox.SelectionStart = 0
+        Me.AddTagBox.ShortcutsEnabled = True
+        Me.AddTagBox.Size = New System.Drawing.Size(132, 23)
+        Me.AddTagBox.TabIndex = 14
+        Me.AddTagBox.UseSelectable = True
+        Me.AddTagBox.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
+        Me.AddTagBox.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
+        '
+        'MetroLabel5
+        '
+        Me.MetroLabel5.AutoSize = True
+        Me.MetroLabel5.Location = New System.Drawing.Point(3, 286)
+        Me.MetroLabel5.Name = "MetroLabel5"
+        Me.MetroLabel5.Size = New System.Drawing.Size(87, 19)
+        Me.MetroLabel5.TabIndex = 4
+        Me.MetroLabel5.Text = "Current User:"
+        '
+        'MetroButton3
+        '
+        Me.MetroButton3.Location = New System.Drawing.Point(141, 159)
+        Me.MetroButton3.Name = "MetroButton3"
+        Me.MetroButton3.Size = New System.Drawing.Size(56, 23)
+        Me.MetroButton3.TabIndex = 13
+        Me.MetroButton3.Text = "Save"
+        Me.MetroButton3.UseSelectable = True
+        '
+        'MetroButton2
+        '
+        Me.MetroButton2.Enabled = False
+        Me.MetroButton2.Location = New System.Drawing.Point(141, 130)
+        Me.MetroButton2.Name = "MetroButton2"
+        Me.MetroButton2.Size = New System.Drawing.Size(56, 23)
+        Me.MetroButton2.TabIndex = 12
+        Me.MetroButton2.Text = "Del"
+        Me.MetroButton2.UseSelectable = True
+        '
+        'AddTagButton
+        '
+        Me.AddTagButton.Enabled = False
+        Me.AddTagButton.Location = New System.Drawing.Point(141, 75)
+        Me.AddTagButton.Name = "AddTagButton"
+        Me.AddTagButton.Size = New System.Drawing.Size(56, 23)
+        Me.AddTagButton.TabIndex = 11
+        Me.AddTagButton.Text = "Add"
+        Me.AddTagButton.UseSelectable = True
         '
         'FacebookAccIDBox
         '
@@ -219,18 +298,6 @@ Partial Class MainViewer
         Me.MetroLabel2.TabIndex = 4
         Me.MetroLabel2.Text = "Facebook OAuth Token"
         '
-        'TagListView
-        '
-        Me.TagListView.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.TagListView.FullRowSelect = True
-        Me.TagListView.Location = New System.Drawing.Point(3, 104)
-        Me.TagListView.Name = "TagListView"
-        Me.TagListView.OwnerDraw = True
-        Me.TagListView.Size = New System.Drawing.Size(102, 179)
-        Me.TagListView.TabIndex = 3
-        Me.TagListView.UseCompatibleStateImageBehavior = False
-        Me.TagListView.UseSelectable = True
-        '
         'MetroLabel1
         '
         Me.MetroLabel1.AutoSize = True
@@ -274,6 +341,7 @@ Partial Class MainViewer
         Me.LogBox.Location = New System.Drawing.Point(0, 3)
         Me.LogBox.Multiline = True
         Me.LogBox.Name = "LogBox"
+        Me.LogBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.LogBox.Size = New System.Drawing.Size(743, 326)
         Me.LogBox.TabIndex = 2
         '
@@ -314,81 +382,13 @@ Partial Class MainViewer
         Me.StatusLabel.TabIndex = 3
         Me.StatusLabel.Text = "Hi! This is a Status Label"
         '
-        'MetroButton1
+        'TagListView
         '
-        Me.MetroButton1.Location = New System.Drawing.Point(111, 75)
-        Me.MetroButton1.Name = "MetroButton1"
-        Me.MetroButton1.Size = New System.Drawing.Size(56, 23)
-        Me.MetroButton1.TabIndex = 11
-        Me.MetroButton1.Text = "Add"
-        Me.MetroButton1.UseSelectable = True
-        '
-        'MetroButton2
-        '
-        Me.MetroButton2.Enabled = False
-        Me.MetroButton2.Location = New System.Drawing.Point(111, 130)
-        Me.MetroButton2.Name = "MetroButton2"
-        Me.MetroButton2.Size = New System.Drawing.Size(56, 23)
-        Me.MetroButton2.TabIndex = 12
-        Me.MetroButton2.Text = "Del"
-        Me.MetroButton2.UseSelectable = True
-        '
-        'MetroButton3
-        '
-        Me.MetroButton3.Location = New System.Drawing.Point(111, 159)
-        Me.MetroButton3.Name = "MetroButton3"
-        Me.MetroButton3.Size = New System.Drawing.Size(56, 23)
-        Me.MetroButton3.TabIndex = 13
-        Me.MetroButton3.Text = "Save"
-        Me.MetroButton3.UseSelectable = True
-        '
-        'MetroLabel5
-        '
-        Me.MetroLabel5.AutoSize = True
-        Me.MetroLabel5.Location = New System.Drawing.Point(448, 6)
-        Me.MetroLabel5.Name = "MetroLabel5"
-        Me.MetroLabel5.Size = New System.Drawing.Size(87, 19)
-        Me.MetroLabel5.TabIndex = 4
-        Me.MetroLabel5.Text = "Current User:"
-        '
-        'CurrentUserLabel
-        '
-        Me.CurrentUserLabel.AutoSize = True
-        Me.CurrentUserLabel.Location = New System.Drawing.Point(532, 6)
-        Me.CurrentUserLabel.Name = "CurrentUserLabel"
-        Me.CurrentUserLabel.Size = New System.Drawing.Size(112, 19)
-        Me.CurrentUserLabel.TabIndex = 5
-        Me.CurrentUserLabel.Text = ">Not Logged in<"
-        '
-        'MetroTextBox1
-        '
-        '
-        '
-        '
-        Me.MetroTextBox1.CustomButton.Image = Nothing
-        Me.MetroTextBox1.CustomButton.Location = New System.Drawing.Point(80, 1)
-        Me.MetroTextBox1.CustomButton.Name = ""
-        Me.MetroTextBox1.CustomButton.Size = New System.Drawing.Size(21, 21)
-        Me.MetroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue
-        Me.MetroTextBox1.CustomButton.TabIndex = 1
-        Me.MetroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light
-        Me.MetroTextBox1.CustomButton.UseSelectable = True
-        Me.MetroTextBox1.CustomButton.Visible = False
-        Me.MetroTextBox1.Lines = New String(-1) {}
-        Me.MetroTextBox1.Location = New System.Drawing.Point(3, 75)
-        Me.MetroTextBox1.MaxLength = 32767
-        Me.MetroTextBox1.Name = "MetroTextBox1"
-        Me.MetroTextBox1.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
-        Me.MetroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None
-        Me.MetroTextBox1.SelectedText = ""
-        Me.MetroTextBox1.SelectionLength = 0
-        Me.MetroTextBox1.SelectionStart = 0
-        Me.MetroTextBox1.ShortcutsEnabled = True
-        Me.MetroTextBox1.Size = New System.Drawing.Size(102, 23)
-        Me.MetroTextBox1.TabIndex = 14
-        Me.MetroTextBox1.UseSelectable = True
-        Me.MetroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
-        Me.MetroTextBox1.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
+        Me.TagListView.FormattingEnabled = True
+        Me.TagListView.Location = New System.Drawing.Point(3, 104)
+        Me.TagListView.Name = "TagListView"
+        Me.TagListView.Size = New System.Drawing.Size(132, 160)
+        Me.TagListView.TabIndex = 15
         '
         'MainViewer
         '
@@ -396,8 +396,6 @@ Partial Class MainViewer
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BorderStyle = MetroFramework.Forms.MetroFormBorderStyle.FixedSingle
         Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.CurrentUserLabel)
-        Me.Controls.Add(Me.MetroLabel5)
         Me.Controls.Add(Me.StatusLabel)
         Me.Controls.Add(Me.OnFire)
         Me.Controls.Add(Me.FireSwitch)
@@ -424,7 +422,6 @@ Partial Class MainViewer
     Friend WithEvents MetroTabPage1 As MetroFramework.Controls.MetroTabPage
     Friend WithEvents MetroTabPage2 As MetroFramework.Controls.MetroTabPage
     Friend WithEvents MetroTabPage3 As MetroFramework.Controls.MetroTabPage
-    Friend WithEvents TagListView As MetroFramework.Controls.MetroListView
     Friend WithEvents MetroLabel1 As MetroFramework.Controls.MetroLabel
     Friend WithEvents FireSwitch As MetroFramework.Controls.MetroToggle
     Friend WithEvents TinderWorker As System.ComponentModel.BackgroundWorker
@@ -439,9 +436,10 @@ Partial Class MainViewer
     Friend WithEvents MetroLabel4 As MetroFramework.Controls.MetroLabel
     Friend WithEvents StatusLabel As Label
     Friend WithEvents MetroButton2 As MetroFramework.Controls.MetroButton
-    Friend WithEvents MetroButton1 As MetroFramework.Controls.MetroButton
+    Friend WithEvents AddTagButton As MetroFramework.Controls.MetroButton
     Friend WithEvents MetroButton3 As MetroFramework.Controls.MetroButton
     Friend WithEvents MetroLabel5 As MetroFramework.Controls.MetroLabel
     Friend WithEvents CurrentUserLabel As MetroFramework.Controls.MetroLabel
-    Friend WithEvents MetroTextBox1 As MetroFramework.Controls.MetroTextBox
+    Friend WithEvents AddTagBox As MetroFramework.Controls.MetroTextBox
+    Friend WithEvents TagListView As ListBox
 End Class
