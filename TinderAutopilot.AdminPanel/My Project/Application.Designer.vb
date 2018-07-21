@@ -32,7 +32,7 @@ Namespace My
 
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()> _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.TinderAutopilot.AdminPanel.Form1
+            Me.MainForm = Global.TinderAutopilot.AdminPanel.MainViewer
         End Sub
     End Class
 End Namespace
