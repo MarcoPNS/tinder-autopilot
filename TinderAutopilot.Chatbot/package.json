@@ -1,0 +1,31 @@
+{
+  "name": "tinderautopilot.chatbot",
+  "version": "1.0.0",
+  "description": "Autopilot Chatbot for tinder",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcoPNS/tinder-autopilot.git"
+  },
+  "keywords": [
+    "tinder",
+    "chatbot",
+    "rest",
+    "go",
+    "tinder"
+  ],
+  "author": "jKelio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcoPNS/tinder-autopilot/issues"
+  },
+  "homepage": "https://github.com/MarcoPNS/tinder-autopilot#readme",
+  "dependencies": {
+    "botbuilder": "^3.15.0",
+    "dotenv-extended": "^2.0.2",
+    "restify": "^7.2.1"
+  }
+}
