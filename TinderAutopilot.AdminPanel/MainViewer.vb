@@ -1,9 +1,12 @@
 ﻿Imports RestSharp
+Imports Newtonsoft.Json.Linq
 Public Class MainViewer
 
     'Das Tinder Telefon
     Dim Client As New RestClient("https://api.gotinder.com/")
+    Dim LoggedIn As Boolean = False
     Dim userId As String = "100001706025627"
+    Dim MyProfile As String
     Dim accessToken As String = "t"
     'Beginn der Action
     Private Sub ViewerVisible(sender As Object, e As EventArgs) Handles MyBase.Shown
@@ -11,10 +14,7 @@ Public Class MainViewer
         'LoginToTinder()
         'GetTinderMatches()
     End Sub
-    Private Sub LoginToTinder()
-
-    End Sub
-    Private Sub GetTinderMatches()
+    Private Sub GetTinderMatch()
 
     End Sub
 
@@ -28,7 +28,30 @@ Public Class MainViewer
         End If
     End Sub
     Public Sub TinderAuth()
+        Try
+            If Not TinderAuthBox.Text = "" Then
+                AuthWithTinderToken()
 
+                Return
+            ElseIf Not FacebookAuthBox.Text = "" Then
+                If FacebookAccIDBox.Text = "" Then
+
+                End If
+            End If
+            Throw New Exception("Auth failed. Missing Infos.")
+        Catch ex As Exception
+            Log(ex.Message)
+        End Try
+    End Sub
+    Public Sub AuthWithTinderToken()
+        Dim AuthRequest As New RestRequest("profile")
+        AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
+        Dim answer As IRestResponse = Client.Execute(AuthRequest)
+        MyProfile = answer.Content
+        Log("Own Profile filled: " & answer.Content)
+        Dim ProfileJson As JObject = JObject.Parse(MyProfile)
+        CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & ProfileJson.SelectToken("birth_date").ToString & ")"
+        Log("Success auth with Tinder Token")
     End Sub
     Public Sub GetNewProfile()
 
@@ -51,10 +74,15 @@ Public Class MainViewer
 
     End Sub
     Private Sub SavingAuthCodes(sender As Object, e As EventArgs) Handles SaveAuth.Click
-        My.Settings.FacebookAuth = FacebookAuthBox.Text
-        My.Settings.TinderAuth = TinderAuthBox.Text
-        My.Settings.FacebookID = FacebookAccIDBox.Text
-        My.Settings.Save()
+        Try
+            TinderAuth()
+            My.Settings.FacebookAuth = FacebookAuthBox.Text
+            My.Settings.TinderAuth = TinderAuthBox.Text
+            My.Settings.FacebookID = FacebookAccIDBox.Text
+            My.Settings.Save()
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles StatusLabel.Click
