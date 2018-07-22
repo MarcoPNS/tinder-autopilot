@@ -26,11 +26,13 @@ Public Class MainViewer
             Return
         End If
         If FireSwitch.Checked = True Then
+            Log("Autopilot started")
             OnFire.Visible = True
             TinderWorker.RunWorkerAsync()
         Else
             OnFire.Visible = False
             TinderWorker.CancelAsync()
+            Log("Autopilot stopped")
         End If
     End Sub
     Public Sub TinderAuth()
@@ -97,23 +99,24 @@ Public Class MainViewer
             Dim NewProfile As JObject = JObject.Parse(NewProfileString)
             Dim ResultSet As JObject = JObject.Parse(NewProfile.Item("results").Item(0).ToString)
             Dim ProfileID As String = ResultSet.SelectToken("_id").ToString
+            Dim ProfileName As String = ResultSet.SelectToken("name").ToString
             Dim tags As String() = My.Settings.LikeTags.Split(New Char() {"-"c})
             For Each Item In tags
                 If NewProfileString.Contains(Item) Then
                     LikeHer = True
-                    Log("Profile contains Tag " & Item)
+                    Console.WriteLine("Profile contains Tag " & Item)
                 End If
             Next
             If LikeHer = True Then
                 Dim AuthRequest As New RestRequest("like/" & ProfileID)
                 AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
                 Dim answer As IRestResponse = Client.Execute(AuthRequest)
-                Log("Liked a Profile with ID " & ProfileID & " API Result: " & answer.Content)
+                Console.WriteLine("Liked a Profile with ID " & ProfileID & " API Result: " & answer.Content)
             Else
                 Dim AuthRequest As New RestRequest("pass/" & ProfileID)
                 AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
                 Dim answer As IRestResponse = Client.Execute(AuthRequest)
-                Log("Pass a Profile with ID " & ProfileID & " API Result: " & answer.Content)
+                Console.WriteLine("Pass a Profile with ID " & ProfileID & " API Result: " & answer.Content)
             End If
             Thread.Sleep(10000)
         Loop
@@ -132,6 +135,7 @@ Public Class MainViewer
     Public Sub Log(msg As String)
         LogBox.AppendText(msg & vbNewLine)
         StatusLabel.Text = (msg)
+        Console.WriteLine(msg)
     End Sub
     Public Sub StartTheWork()
 
