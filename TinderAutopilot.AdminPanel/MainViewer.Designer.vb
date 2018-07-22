@@ -49,7 +49,8 @@ Partial Class MainViewer
         Me.StatusLabel = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
-        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.MetroButton1 = New MetroFramework.Controls.MetroButton()
+        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.MetroTabControl1.SuspendLayout()
         Me.MetroTabPage1.SuspendLayout()
         Me.MetroTabPage2.SuspendLayout()
@@ -64,7 +65,7 @@ Partial Class MainViewer
         Me.MetroTabControl1.Controls.Add(Me.MetroTabPage3)
         Me.MetroTabControl1.Location = New System.Drawing.Point(22, 63)
         Me.MetroTabControl1.Name = "MetroTabControl1"
-        Me.MetroTabControl1.SelectedIndex = 0
+        Me.MetroTabControl1.SelectedIndex = 1
         Me.MetroTabControl1.Size = New System.Drawing.Size(754, 364)
         Me.MetroTabControl1.Style = MetroFramework.MetroColorStyle.Orange
         Me.MetroTabControl1.TabIndex = 0
@@ -323,7 +324,8 @@ Partial Class MainViewer
         '
         'MetroTabPage2
         '
-        Me.MetroTabPage2.Controls.Add(Me.FlowLayoutPanel1)
+        Me.MetroTabPage2.Controls.Add(Me.WebBrowser1)
+        Me.MetroTabPage2.Controls.Add(Me.MetroButton1)
         Me.MetroTabPage2.HorizontalScrollbarBarColor = True
         Me.MetroTabPage2.HorizontalScrollbarHighlightOnWheel = False
         Me.MetroTabPage2.HorizontalScrollbarSize = 10
@@ -419,12 +421,22 @@ Partial Class MainViewer
         Me.LinkLabel2.TabStop = True
         Me.LinkLabel2.Text = "Get"
         '
-        'FlowLayoutPanel1
+        'MetroButton1
         '
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(3, 3)
-        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(740, 316)
-        Me.FlowLayoutPanel1.TabIndex = 2
+        Me.MetroButton1.Location = New System.Drawing.Point(668, 3)
+        Me.MetroButton1.Name = "MetroButton1"
+        Me.MetroButton1.Size = New System.Drawing.Size(75, 23)
+        Me.MetroButton1.TabIndex = 3
+        Me.MetroButton1.Text = "Refresh"
+        Me.MetroButton1.UseSelectable = True
+        '
+        'WebBrowser1
+        '
+        Me.WebBrowser1.Location = New System.Drawing.Point(3, 32)
+        Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.WebBrowser1.Name = "WebBrowser1"
+        Me.WebBrowser1.Size = New System.Drawing.Size(740, 287)
+        Me.WebBrowser1.TabIndex = 4
         '
         'MainViewer
         '
@@ -481,5 +493,6 @@ Partial Class MainViewer
     Friend WithEvents TagListView As ListBox
     Friend WithEvents LinkLabel2 As LinkLabel
     Friend WithEvents LinkLabel1 As LinkLabel
-    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents MetroButton1 As MetroFramework.Controls.MetroButton
+    Friend WithEvents WebBrowser1 As WebBrowser
 End Class

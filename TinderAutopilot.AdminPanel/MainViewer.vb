@@ -1,6 +1,8 @@
 ﻿Imports RestSharp
 Imports Newtonsoft.Json.Linq
 Imports System.Threading
+Imports System.Net
+Imports System.IO
 Public Class MainViewer
 
     'Das Tinder Telefon
@@ -12,8 +14,9 @@ Public Class MainViewer
     'Beginn der Action
     Private Sub ViewerVisible(sender As Object, e As EventArgs) Handles MyBase.Shown
         Log("Tinder Autopilot Dashboard started")
-        'LoginToTinder()
-        'GetTinderMatches()
+        If Directory.Exists(Application.StartupPath & "\swipes\") Then
+            Directory.CreateDirectory(Application.StartupPath & "\swipes\")
+        End If
     End Sub
     Private Sub GetTinderMatch()
 
@@ -94,12 +97,18 @@ Public Class MainViewer
 
     Private Sub TinderWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles TinderWorker.DoWork
         Do
+            If TinderWorker.CancellationPending = True Then
+                Return
+            End If
             Dim LikeHer As Boolean = False
             Dim NewProfileString As String = GetNewProfile()
             Dim NewProfile As JObject = JObject.Parse(NewProfileString)
             Dim ResultSet As JObject = JObject.Parse(NewProfile.Item("results").Item(0).ToString)
             Dim ProfileID As String = ResultSet.SelectToken("_id").ToString
             Dim ProfileName As String = ResultSet.SelectToken("name").ToString
+            Dim PicSet As JObject = JObject.Parse(ResultSet.Item("photos").Item(0).ToString)
+            Console.WriteLine("Found pictures " & PicSet.ToString)
+            Dim PictureID As String = PicSet.SelectToken("fileName").ToString
             Dim tags As String() = My.Settings.LikeTags.Split(New Char() {"-"c})
             For Each Item In tags
                 If NewProfileString.Contains(Item) Then
@@ -107,17 +116,34 @@ Public Class MainViewer
                     Console.WriteLine("Profile contains Tag " & Item)
                 End If
             Next
+            Dim ResultText As String
             If LikeHer = True Then
                 Dim AuthRequest As New RestRequest("like/" & ProfileID)
                 AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
                 Dim answer As IRestResponse = Client.Execute(AuthRequest)
                 Console.WriteLine("Liked a Profile with ID " & ProfileID & " API Result: " & answer.Content)
+                ResultText = ProfileName & "-Liked-" & ProfileID
             Else
                 Dim AuthRequest As New RestRequest("pass/" & ProfileID)
                 AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
                 Dim answer As IRestResponse = Client.Execute(AuthRequest)
                 Console.WriteLine("Pass a Profile with ID " & ProfileID & " API Result: " & answer.Content)
+                ResultText = ProfileName & "-Passed-" & ProfileID
             End If
+            Try
+                Using sw As StreamWriter = File.AppendText(Application.StartupPath & "\swipes.html")
+                    sw.WriteLine("<br>")
+                    sw.WriteLine("<img src=" & "https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID & ".jpg"" height=""200"" width=""200""")
+                End Using
+                Dim PicClient As New WebClient
+                Console.WriteLine("Try download " & "https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID)
+                PicClient.DownloadFile("https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID & ".jpg", Application.StartupPath & "\swipes\" & ResultText & ".jpg")
+                PicClient.Dispose()
+                Console.WriteLine("Downloaded profile pic and saved under " & Application.StartupPath & "\swipes\" & ResultText & ".jpg")
+            Catch ex As Exception
+
+            End Try
+
             Thread.Sleep(10000)
         Loop
     End Sub
