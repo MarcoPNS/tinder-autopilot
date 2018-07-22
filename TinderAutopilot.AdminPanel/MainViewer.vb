@@ -8,7 +8,7 @@ Public Class MainViewer
     Dim LoggedIn As Boolean = False
     Dim userId As String = "100001706025627"
     Dim MyProfile As String
-    Dim accessToken As String = "t"
+    Dim accessToken As String = ""
     'Beginn der Action
     Private Sub ViewerVisible(sender As Object, e As EventArgs) Handles MyBase.Shown
         Log("Tinder Autopilot Dashboard started")
@@ -63,6 +63,14 @@ Public Class MainViewer
         CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & String.Format("{0:dd/MM/yyyy}", ProfileJson.SelectToken("birth_date").ToString) & ")"
         Log("Success auth with Tinder Token")
     End Sub
+    Public Function GetTinderMeta() As JObject
+        Dim AuthRequest As New RestRequest("meta")
+        AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
+        Dim answer As IRestResponse = Client.Execute(AuthRequest)
+        Log("Got own Meta Data: " & answer.Content)
+        Dim AnswerJson As JObject = JObject.Parse(answer.Content)
+        Return AnswerJson
+    End Function
     Public Function GetNewProfile() As JObject
         Dim AuthRequest As New RestRequest("user/recs")
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)

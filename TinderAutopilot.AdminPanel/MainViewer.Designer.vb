@@ -47,6 +47,8 @@ Partial Class MainViewer
         Me.TinderWorker = New System.ComponentModel.BackgroundWorker()
         Me.OnFire = New System.Windows.Forms.PictureBox()
         Me.StatusLabel = New System.Windows.Forms.Label()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.MetroTabControl1.SuspendLayout()
         Me.MetroTabPage1.SuspendLayout()
         Me.MetroTabPage3.SuspendLayout()
@@ -60,7 +62,7 @@ Partial Class MainViewer
         Me.MetroTabControl1.Controls.Add(Me.MetroTabPage3)
         Me.MetroTabControl1.Location = New System.Drawing.Point(22, 63)
         Me.MetroTabControl1.Name = "MetroTabControl1"
-        Me.MetroTabControl1.SelectedIndex = 1
+        Me.MetroTabControl1.SelectedIndex = 0
         Me.MetroTabControl1.Size = New System.Drawing.Size(754, 364)
         Me.MetroTabControl1.Style = MetroFramework.MetroColorStyle.Orange
         Me.MetroTabControl1.TabIndex = 0
@@ -68,6 +70,8 @@ Partial Class MainViewer
         '
         'MetroTabPage1
         '
+        Me.MetroTabPage1.Controls.Add(Me.LinkLabel2)
+        Me.MetroTabPage1.Controls.Add(Me.LinkLabel1)
         Me.MetroTabPage1.Controls.Add(Me.TagListView)
         Me.MetroTabPage1.Controls.Add(Me.CurrentUserLabel)
         Me.MetroTabPage1.Controls.Add(Me.AddTagBox)
@@ -98,7 +102,7 @@ Partial Class MainViewer
         'TagListView
         '
         Me.TagListView.FormattingEnabled = True
-        Me.TagListView.Location = New System.Drawing.Point(3, 104)
+        Me.TagListView.Location = New System.Drawing.Point(3, 121)
         Me.TagListView.Name = "TagListView"
         Me.TagListView.Size = New System.Drawing.Size(132, 160)
         Me.TagListView.TabIndex = 15
@@ -106,7 +110,7 @@ Partial Class MainViewer
         'CurrentUserLabel
         '
         Me.CurrentUserLabel.AutoSize = True
-        Me.CurrentUserLabel.Location = New System.Drawing.Point(87, 286)
+        Me.CurrentUserLabel.Location = New System.Drawing.Point(87, 293)
         Me.CurrentUserLabel.Name = "CurrentUserLabel"
         Me.CurrentUserLabel.Size = New System.Drawing.Size(112, 19)
         Me.CurrentUserLabel.TabIndex = 5
@@ -127,7 +131,7 @@ Partial Class MainViewer
         Me.AddTagBox.CustomButton.UseSelectable = True
         Me.AddTagBox.CustomButton.Visible = False
         Me.AddTagBox.Lines = New String(-1) {}
-        Me.AddTagBox.Location = New System.Drawing.Point(3, 75)
+        Me.AddTagBox.Location = New System.Drawing.Point(3, 92)
         Me.AddTagBox.MaxLength = 32767
         Me.AddTagBox.Name = "AddTagBox"
         Me.AddTagBox.PasswordChar = Global.Microsoft.VisualBasic.ChrW(0)
@@ -145,7 +149,7 @@ Partial Class MainViewer
         'MetroLabel5
         '
         Me.MetroLabel5.AutoSize = True
-        Me.MetroLabel5.Location = New System.Drawing.Point(3, 286)
+        Me.MetroLabel5.Location = New System.Drawing.Point(3, 293)
         Me.MetroLabel5.Name = "MetroLabel5"
         Me.MetroLabel5.Size = New System.Drawing.Size(87, 19)
         Me.MetroLabel5.TabIndex = 4
@@ -153,7 +157,7 @@ Partial Class MainViewer
         '
         'MetroButton3
         '
-        Me.MetroButton3.Location = New System.Drawing.Point(141, 159)
+        Me.MetroButton3.Location = New System.Drawing.Point(141, 176)
         Me.MetroButton3.Name = "MetroButton3"
         Me.MetroButton3.Size = New System.Drawing.Size(56, 23)
         Me.MetroButton3.TabIndex = 13
@@ -163,7 +167,7 @@ Partial Class MainViewer
         'DelTagItem
         '
         Me.DelTagItem.Enabled = False
-        Me.DelTagItem.Location = New System.Drawing.Point(141, 130)
+        Me.DelTagItem.Location = New System.Drawing.Point(141, 147)
         Me.DelTagItem.Name = "DelTagItem"
         Me.DelTagItem.Size = New System.Drawing.Size(56, 23)
         Me.DelTagItem.TabIndex = 12
@@ -173,7 +177,7 @@ Partial Class MainViewer
         'AddTagButton
         '
         Me.AddTagButton.Enabled = False
-        Me.AddTagButton.Location = New System.Drawing.Point(141, 75)
+        Me.AddTagButton.Location = New System.Drawing.Point(141, 92)
         Me.AddTagButton.Name = "AddTagButton"
         Me.AddTagButton.Size = New System.Drawing.Size(56, 23)
         Me.AddTagButton.TabIndex = 11
@@ -309,7 +313,7 @@ Partial Class MainViewer
         'MetroLabel1
         '
         Me.MetroLabel1.AutoSize = True
-        Me.MetroLabel1.Location = New System.Drawing.Point(3, 53)
+        Me.MetroLabel1.Location = New System.Drawing.Point(3, 70)
         Me.MetroLabel1.Name = "MetroLabel1"
         Me.MetroLabel1.Size = New System.Drawing.Size(101, 19)
         Me.MetroLabel1.TabIndex = 2
@@ -390,6 +394,28 @@ Partial Class MainViewer
         Me.StatusLabel.TabIndex = 3
         Me.StatusLabel.Text = "Hi! This is a Status Label"
         '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.AutoSize = True
+        Me.LinkLabel1.BackColor = System.Drawing.Color.Transparent
+        Me.LinkLabel1.Location = New System.Drawing.Point(261, 53)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(24, 13)
+        Me.LinkLabel1.TabIndex = 16
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "Get"
+        '
+        'LinkLabel2
+        '
+        Me.LinkLabel2.AutoSize = True
+        Me.LinkLabel2.BackColor = System.Drawing.Color.Transparent
+        Me.LinkLabel2.Location = New System.Drawing.Point(111, 53)
+        Me.LinkLabel2.Name = "LinkLabel2"
+        Me.LinkLabel2.Size = New System.Drawing.Size(24, 13)
+        Me.LinkLabel2.TabIndex = 17
+        Me.LinkLabel2.TabStop = True
+        Me.LinkLabel2.Text = "Get"
+        '
         'MainViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -442,4 +468,6 @@ Partial Class MainViewer
     Friend WithEvents CurrentUserLabel As MetroFramework.Controls.MetroLabel
     Friend WithEvents AddTagBox As MetroFramework.Controls.MetroTextBox
     Friend WithEvents TagListView As ListBox
+    Friend WithEvents LinkLabel2 As LinkLabel
+    Friend WithEvents LinkLabel1 As LinkLabel
 End Class
