@@ -25,11 +25,12 @@ Partial Class MainViewer
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainViewer))
         Me.MetroTabControl1 = New MetroFramework.Controls.MetroTabControl()
         Me.MetroTabPage1 = New MetroFramework.Controls.MetroTabPage()
+        Me.TagListView = New System.Windows.Forms.ListBox()
         Me.CurrentUserLabel = New MetroFramework.Controls.MetroLabel()
         Me.AddTagBox = New MetroFramework.Controls.MetroTextBox()
         Me.MetroLabel5 = New MetroFramework.Controls.MetroLabel()
         Me.MetroButton3 = New MetroFramework.Controls.MetroButton()
-        Me.MetroButton2 = New MetroFramework.Controls.MetroButton()
+        Me.DelTagItem = New MetroFramework.Controls.MetroButton()
         Me.AddTagButton = New MetroFramework.Controls.MetroButton()
         Me.FacebookAccIDBox = New MetroFramework.Controls.MetroTextBox()
         Me.MetroLabel4 = New MetroFramework.Controls.MetroLabel()
@@ -46,7 +47,6 @@ Partial Class MainViewer
         Me.TinderWorker = New System.ComponentModel.BackgroundWorker()
         Me.OnFire = New System.Windows.Forms.PictureBox()
         Me.StatusLabel = New System.Windows.Forms.Label()
-        Me.TagListView = New System.Windows.Forms.ListBox()
         Me.MetroTabControl1.SuspendLayout()
         Me.MetroTabPage1.SuspendLayout()
         Me.MetroTabPage3.SuspendLayout()
@@ -60,7 +60,7 @@ Partial Class MainViewer
         Me.MetroTabControl1.Controls.Add(Me.MetroTabPage3)
         Me.MetroTabControl1.Location = New System.Drawing.Point(22, 63)
         Me.MetroTabControl1.Name = "MetroTabControl1"
-        Me.MetroTabControl1.SelectedIndex = 0
+        Me.MetroTabControl1.SelectedIndex = 1
         Me.MetroTabControl1.Size = New System.Drawing.Size(754, 364)
         Me.MetroTabControl1.Style = MetroFramework.MetroColorStyle.Orange
         Me.MetroTabControl1.TabIndex = 0
@@ -73,7 +73,7 @@ Partial Class MainViewer
         Me.MetroTabPage1.Controls.Add(Me.AddTagBox)
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel5)
         Me.MetroTabPage1.Controls.Add(Me.MetroButton3)
-        Me.MetroTabPage1.Controls.Add(Me.MetroButton2)
+        Me.MetroTabPage1.Controls.Add(Me.DelTagItem)
         Me.MetroTabPage1.Controls.Add(Me.AddTagButton)
         Me.MetroTabPage1.Controls.Add(Me.FacebookAccIDBox)
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel4)
@@ -94,6 +94,14 @@ Partial Class MainViewer
         Me.MetroTabPage1.VerticalScrollbarBarColor = True
         Me.MetroTabPage1.VerticalScrollbarHighlightOnWheel = False
         Me.MetroTabPage1.VerticalScrollbarSize = 10
+        '
+        'TagListView
+        '
+        Me.TagListView.FormattingEnabled = True
+        Me.TagListView.Location = New System.Drawing.Point(3, 104)
+        Me.TagListView.Name = "TagListView"
+        Me.TagListView.Size = New System.Drawing.Size(132, 160)
+        Me.TagListView.TabIndex = 15
         '
         'CurrentUserLabel
         '
@@ -152,15 +160,15 @@ Partial Class MainViewer
         Me.MetroButton3.Text = "Save"
         Me.MetroButton3.UseSelectable = True
         '
-        'MetroButton2
+        'DelTagItem
         '
-        Me.MetroButton2.Enabled = False
-        Me.MetroButton2.Location = New System.Drawing.Point(141, 130)
-        Me.MetroButton2.Name = "MetroButton2"
-        Me.MetroButton2.Size = New System.Drawing.Size(56, 23)
-        Me.MetroButton2.TabIndex = 12
-        Me.MetroButton2.Text = "Del"
-        Me.MetroButton2.UseSelectable = True
+        Me.DelTagItem.Enabled = False
+        Me.DelTagItem.Location = New System.Drawing.Point(141, 130)
+        Me.DelTagItem.Name = "DelTagItem"
+        Me.DelTagItem.Size = New System.Drawing.Size(56, 23)
+        Me.DelTagItem.TabIndex = 12
+        Me.DelTagItem.Text = "Del"
+        Me.DelTagItem.UseSelectable = True
         '
         'AddTagButton
         '
@@ -365,9 +373,9 @@ Partial Class MainViewer
         'OnFire
         '
         Me.OnFire.Image = Global.TinderAutopilot.AdminPanel.My.Resources.Resources.fire
-        Me.OnFire.Location = New System.Drawing.Point(8, 30)
+        Me.OnFire.Location = New System.Drawing.Point(4, 30)
         Me.OnFire.Name = "OnFire"
-        Me.OnFire.Size = New System.Drawing.Size(13, 15)
+        Me.OnFire.Size = New System.Drawing.Size(17, 15)
         Me.OnFire.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.OnFire.TabIndex = 2
         Me.OnFire.TabStop = False
@@ -381,14 +389,6 @@ Partial Class MainViewer
         Me.StatusLabel.Size = New System.Drawing.Size(124, 13)
         Me.StatusLabel.TabIndex = 3
         Me.StatusLabel.Text = "Hi! This is a Status Label"
-        '
-        'TagListView
-        '
-        Me.TagListView.FormattingEnabled = True
-        Me.TagListView.Location = New System.Drawing.Point(3, 104)
-        Me.TagListView.Name = "TagListView"
-        Me.TagListView.Size = New System.Drawing.Size(132, 160)
-        Me.TagListView.TabIndex = 15
         '
         'MainViewer
         '
@@ -435,7 +435,7 @@ Partial Class MainViewer
     Friend WithEvents FacebookAccIDBox As MetroFramework.Controls.MetroTextBox
     Friend WithEvents MetroLabel4 As MetroFramework.Controls.MetroLabel
     Friend WithEvents StatusLabel As Label
-    Friend WithEvents MetroButton2 As MetroFramework.Controls.MetroButton
+    Friend WithEvents DelTagItem As MetroFramework.Controls.MetroButton
     Friend WithEvents AddTagButton As MetroFramework.Controls.MetroButton
     Friend WithEvents MetroButton3 As MetroFramework.Controls.MetroButton
     Friend WithEvents MetroLabel5 As MetroFramework.Controls.MetroLabel

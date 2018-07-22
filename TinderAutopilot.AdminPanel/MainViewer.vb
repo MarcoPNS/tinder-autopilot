@@ -1,5 +1,6 @@
 ﻿Imports RestSharp
 Imports Newtonsoft.Json.Linq
+Imports System.Threading
 Public Class MainViewer
 
     'Das Tinder Telefon
@@ -59,15 +60,24 @@ Public Class MainViewer
         MyProfile = answer.Content
         Log("Own Profile filled: " & answer.Content)
         Dim ProfileJson As JObject = JObject.Parse(MyProfile)
-        CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & ProfileJson.SelectToken("birth_date").ToString & ")"
+        CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & String.Format("{0:dd/MM/yyyy}", ProfileJson.SelectToken("birth_date").ToString) & ")"
         Log("Success auth with Tinder Token")
     End Sub
-    Public Sub GetNewProfile()
-
-    End Sub
+    Public Function GetNewProfile() As JObject
+        Dim AuthRequest As New RestRequest("user/recs")
+        AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
+        Dim answer As IRestResponse = Client.Execute(AuthRequest)
+        Dim NewProfile As JObject = JObject.Parse(answer.Content)
+        Return NewProfile
+    End Function
 
     Private Sub TinderWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles TinderWorker.DoWork
+        Do
+            GetNewProfile()
 
+
+            Thread.Sleep(10000)
+        Loop
     End Sub
 
     Private Sub LoadForm(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -104,6 +114,26 @@ Public Class MainViewer
 
     Private Sub AddTagButton_Click(sender As Object, e As EventArgs) Handles AddTagButton.Click
         TagListView.Items.Add(AddTagBox.Text)
+        Log(AddTagBox.Text & " added to Tag List")
         AddTagBox.Clear()
+    End Sub
+
+    Private Sub MetroButton3_Click(sender As Object, e As EventArgs) Handles MetroButton3.Click
+        Dim SaveString As String = ""
+        For Each Item In TagListView.Items
+            SaveString = SaveString & Item & "-"
+        Next
+        SaveString = SaveString.Remove(SaveString.Length - 1)
+        My.Settings.LikeTags = SaveString
+        My.Settings.Save()
+        Log("Saved Tag String: " & SaveString)
+    End Sub
+
+    Private Sub DeleteTag(sender As Object, e As EventArgs) Handles DelTagItem.Click
+        TagListView.SelectedItems.Remove(TagListView.SelectedItem)
+    End Sub
+
+    Private Sub TagListView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TagListView.SelectedIndexChanged
+        DelTagItem.Enabled = True
     End Sub
 End Class
