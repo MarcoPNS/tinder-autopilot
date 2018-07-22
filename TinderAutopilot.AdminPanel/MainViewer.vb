@@ -146,7 +146,7 @@ Public Class MainViewer
         Loop
     End Sub
     Public Sub SwipeRight(id As String)
-
+        'not needed
     End Sub
     Public Sub SwipeLeft(id As String)
 
