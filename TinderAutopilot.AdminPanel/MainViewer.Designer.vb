@@ -437,6 +437,8 @@ Partial Class MainViewer
         Me.WebBrowser1.Name = "WebBrowser1"
         Me.WebBrowser1.Size = New System.Drawing.Size(740, 287)
         Me.WebBrowser1.TabIndex = 4
+        Me.WebBrowser1.Url = New System.Uri("file:///C:/Users/marco/source/repos/tinder-autopilot/TinderAutopilot.AdminPanel/b" &
+        "in/Debug/swipes.html", System.UriKind.Absolute)
         '
         'MainViewer
         '
