@@ -133,7 +133,8 @@ Public Class MainViewer
             Try
                 Using sw As StreamWriter = File.AppendText(Application.StartupPath & "\swipes.html")
                     sw.WriteLine("<br>")
-                    sw.WriteLine("<img src=" & "https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID & ".jpg"" height=""200"" width=""200""")
+                    sw.WriteLine("<img src=""https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID & """ height=""200"" width=""200"">")
+                    sw.WriteLine("<br>" & ResultText & "<br>")
                 End Using
                 Dim PicClient As New WebClient
                 Console.WriteLine("Try download " & "https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID)
