@@ -136,11 +136,8 @@ Public Class MainViewer
                     sw.WriteLine("<img src=""https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID & """ height=""200"" width=""200"">")
                     sw.WriteLine("<br>" & ResultText & "<br>")
                 End Using
-                Dim PicClient As New WebClient
                 Console.WriteLine("Try download " & "https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID)
-                PicClient.DownloadFile("https://images-ssl.gotinder.com/" & ProfileID & "/1080x1080_" & PictureID & ".jpg", Application.StartupPath & "\swipes\" & ResultText & ".jpg")
-                PicClient.Dispose()
-                Console.WriteLine("Downloaded profile pic and saved under " & Application.StartupPath & "\swipes\" & ResultText & ".jpg")
+                Console.WriteLine("Added profile reference and saved")
             Catch ex As Exception
 
             End Try
