@@ -44,7 +44,7 @@ Public Class MainViewer
                 LoggedIn = True
                 Return
             ElseIf Not FacebookAuthBox.Text = "" Then
-                If FacebookAccIDBox.Text = "" Then
+                If Not FacebookAccIDBox.Text = "" Then
 
                 End If
             End If
@@ -63,6 +63,18 @@ Public Class MainViewer
         CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & String.Format("{0:dd/MM/yyyy}", ProfileJson.SelectToken("birth_date").ToString) & ")"
         Log("Success auth with Tinder Token")
     End Sub
+    Public Sub AuthWithFacebookToken()
+        Dim AuthRequest As New RestRequest("auth")
+        AuthRequest.AddParameter("facebook_token", FacebookAuthBox.Text)
+        AuthRequest.AddParameter("facebook_id", FacebookAccIDBox.Text)
+        Dim answer As IRestResponse = Client.Execute(AuthRequest)
+        MyProfile = answer.Content
+        Log("Own Profile filled: " & answer.Content)
+        Dim ProfileJson As JObject = JObject.Parse(MyProfile)
+        CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & String.Format("{0:dd/MM/yyyy}", ProfileJson.SelectToken("birth_date").ToString) & ")"
+        AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
+        Log("Success auth with Facebook Token")
+    End Sub
     Public Function GetTinderMeta() As JObject
         Dim AuthRequest As New RestRequest("meta")
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
@@ -71,23 +83,47 @@ Public Class MainViewer
         Dim AnswerJson As JObject = JObject.Parse(answer.Content)
         Return AnswerJson
     End Function
-    Public Function GetNewProfile() As JObject
+    Public Function GetNewProfile() As String
         Dim AuthRequest As New RestRequest("user/recs")
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
         Dim answer As IRestResponse = Client.Execute(AuthRequest)
-        Dim NewProfile As JObject = JObject.Parse(answer.Content)
-        Return NewProfile
+        Return answer.Content
     End Function
 
     Private Sub TinderWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles TinderWorker.DoWork
         Do
-            GetNewProfile()
-
-
+            Dim LikeHer As Boolean = False
+            Dim NewProfileString As String = GetNewProfile()
+            Dim NewProfile As JObject = JObject.Parse(NewProfileString)
+            Dim ResultSet As JObject = JObject.Parse(NewProfile.Item("results").Item(0).ToString)
+            Dim ProfileID As String = ResultSet.SelectToken("_id").ToString
+            Dim tags As String() = My.Settings.LikeTags.Split(New Char() {"-"c})
+            For Each Item In tags
+                If NewProfileString.Contains(Item) Then
+                    LikeHer = True
+                    Log("Profile contains Tag " & Item)
+                End If
+            Next
+            If LikeHer = True Then
+                Dim AuthRequest As New RestRequest("like/" & ProfileID)
+                AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
+                Dim answer As IRestResponse = Client.Execute(AuthRequest)
+                Log("Liked a Profile with ID " & ProfileID & " API Result: " & answer.Content)
+            Else
+                Dim AuthRequest As New RestRequest("pass/" & ProfileID)
+                AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
+                Dim answer As IRestResponse = Client.Execute(AuthRequest)
+                Log("Pass a Profile with ID " & ProfileID & " API Result: " & answer.Content)
+            End If
             Thread.Sleep(10000)
         Loop
     End Sub
+    Public Sub SwipeRight(id As String)
 
+    End Sub
+    Public Sub SwipeLeft(id As String)
+
+    End Sub
     Private Sub LoadForm(sender As Object, e As EventArgs) Handles MyBase.Load
         FacebookAuthBox.Text = My.Settings.FacebookAuth
         TinderAuthBox.Text = My.Settings.TinderAuth
@@ -143,5 +179,13 @@ Public Class MainViewer
 
     Private Sub TagListView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TagListView.SelectedIndexChanged
         DelTagItem.Enabled = True
+    End Sub
+
+    Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+        Process.Start("https://findmyfbid.com/")
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        Process.Start("https://www.facebook.com/login.php?skip_api_login=1&api_key=464891386855067&signed_next=1&next=https%3A%2F%2Fwww.facebook.com%2Fv2.8%2Fdialog%2Foauth%3Fchannel%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fconnect%252Fxd_arbiter%252Fr%252FbSTT5dUx9MY.js%253Fversion%253D42%2523cb%253Df3cc083e377b028%2526domain%253Dtinder.com%2526origin%253Dhttps%25253A%25252F%25252Ftinder.com%25252Ff2984747849e2a4%2526relation%253Dopener%26redirect_uri%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fconnect%252Fxd_arbiter%252Fr%252FbSTT5dUx9MY.js%253Fversion%253D42%2523cb%253Df30b25354398c58%2526domain%253Dtinder.com%2526origin%253Dhttps%25253A%25252F%25252Ftinder.com%25252Ff2984747849e2a4%2526relation%253Dopener%2526frame%253Df224bf576396578%26display%3Dpopup%26scope%3Duser_birthday%252Cuser_photos%252Cemail%252Cuser_friends%252Cuser_likes%26response_type%3Dtoken%252Csigned_request%26domain%3Dtinder.com%26origin%3D1%26client_id%3D464891386855067%26ret%3Dlogin%26sdk%3Djoey%26logger_id%3D2cb28a7a-1f42-b041-752c-846b78eb9856&cancel_url=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2FbSTT5dUx9MY.js%3Fversion%3D42%23cb%3Df30b25354398c58%26domain%3Dtinder.com%26origin%3Dhttps%253A%252F%252Ftinder.com%252Ff2984747849e2a4%26relation%3Dopener%26frame%3Df224bf576396578%26error%3Daccess_denied%26error_code%3D200%26error_description%3DPermissions%2Berror%26error_reason%3Duser_denied%26e2e%3D%257B%257D&display=popup&locale=de_DE&logger_id=2cb28a7a-1f42-b041-752c-846b78eb9856")
     End Sub
 End Class

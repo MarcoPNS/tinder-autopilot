@@ -49,8 +49,10 @@ Partial Class MainViewer
         Me.StatusLabel = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.MetroTabControl1.SuspendLayout()
         Me.MetroTabPage1.SuspendLayout()
+        Me.MetroTabPage2.SuspendLayout()
         Me.MetroTabPage3.SuspendLayout()
         CType(Me.OnFire, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -321,6 +323,7 @@ Partial Class MainViewer
         '
         'MetroTabPage2
         '
+        Me.MetroTabPage2.Controls.Add(Me.FlowLayoutPanel1)
         Me.MetroTabPage2.HorizontalScrollbarBarColor = True
         Me.MetroTabPage2.HorizontalScrollbarHighlightOnWheel = False
         Me.MetroTabPage2.HorizontalScrollbarSize = 10
@@ -416,6 +419,13 @@ Partial Class MainViewer
         Me.LinkLabel2.TabStop = True
         Me.LinkLabel2.Text = "Get"
         '
+        'FlowLayoutPanel1
+        '
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(740, 316)
+        Me.FlowLayoutPanel1.TabIndex = 2
+        '
         'MainViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -436,6 +446,7 @@ Partial Class MainViewer
         Me.MetroTabControl1.ResumeLayout(False)
         Me.MetroTabPage1.ResumeLayout(False)
         Me.MetroTabPage1.PerformLayout()
+        Me.MetroTabPage2.ResumeLayout(False)
         Me.MetroTabPage3.ResumeLayout(False)
         Me.MetroTabPage3.PerformLayout()
         CType(Me.OnFire, System.ComponentModel.ISupportInitialize).EndInit()
@@ -470,4 +481,5 @@ Partial Class MainViewer
     Friend WithEvents TagListView As ListBox
     Friend WithEvents LinkLabel2 As LinkLabel
     Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 End Class
