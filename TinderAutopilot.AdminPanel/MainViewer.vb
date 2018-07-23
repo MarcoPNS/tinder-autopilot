@@ -7,7 +7,7 @@ Public Class MainViewer
     'Das Tinder Telefon
     ReadOnly _client As New RestClient("https://api.gotinder.com/")
     Dim _loggedIn As Boolean = False
-    Dim MyProfile As String
+    Dim _myProfile As String
     'Beginn der Action
     Private Sub ViewerVisible(sender As Object, e As EventArgs) Handles MyBase.Shown
         Log("Tinder Autopilot Dashboard started")
@@ -15,17 +15,22 @@ Public Class MainViewer
             Directory.CreateDirectory(Application.StartupPath & "\swipes\")
         End If
     End Sub
+
+    'Action für den An Aus Switch des Tinder Autopilot's
     Private Sub FireSwitched(sender As Object, e As EventArgs) Handles FireSwitch.CheckedChanged
         If _loggedIn = False Then
             FireSwitch.Checked = False
             Log("Can't start Autopilot. Please auth your account.")
             Return
         End If
+
         If FireSwitch.Checked = True Then
+            'Wenn auf An geswitched wird
             Log("Autopilot started")
             OnFire.Visible = True
             TinderWorker.RunWorkerAsync()
         Else
+            'Wenn auf Aus geswitched wird
             OnFire.Visible = False
             TinderWorker.CancelAsync()
             Log("Autopilot stopped")
@@ -55,9 +60,9 @@ Public Class MainViewer
         Dim AuthRequest As New RestRequest("profile")
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
         Dim answer As IRestResponse = _client.Execute(AuthRequest)
-        MyProfile = answer.Content
+        _myProfile = answer.Content
         Log("Own Profile filled: " & answer.Content)
-        Dim ProfileJson As JObject = JObject.Parse(MyProfile)
+        Dim ProfileJson As JObject = JObject.Parse(_myProfile)
         CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & String.Format("{0:dd/MM/yyyy}", ProfileJson.SelectToken("birth_date").ToString) & ")"
         Log("Success auth with Tinder Token")
     End Sub
@@ -66,9 +71,9 @@ Public Class MainViewer
         AuthRequest.AddParameter("facebook_token", FacebookAuthBox.Text)
         AuthRequest.AddParameter("facebook_id", FacebookAccIDBox.Text)
         Dim answer As IRestResponse = _client.Execute(AuthRequest)
-        MyProfile = answer.Content
+        _myProfile = answer.Content
         Log("Own Profile filled: " & answer.Content)
-        Dim ProfileJson As JObject = JObject.Parse(MyProfile)
+        Dim ProfileJson As JObject = JObject.Parse(_myProfile)
         CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & String.Format("{0:dd/MM/yyyy}", ProfileJson.SelectToken("birth_date").ToString) & ")"
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
         Log("Success auth with Facebook Token")
