@@ -1,16 +1,13 @@
 ﻿Imports RestSharp
 Imports Newtonsoft.Json.Linq
 Imports System.Threading
-Imports System.Net
 Imports System.IO
 Public Class MainViewer
 
     'Das Tinder Telefon
-    Dim Client As New RestClient("https://api.gotinder.com/")
-    Dim LoggedIn As Boolean = False
-    Dim userId As String = "100001706025627"
+    ReadOnly _client As New RestClient("https://api.gotinder.com/")
+    Dim _loggedIn As Boolean = False
     Dim MyProfile As String
-    Dim accessToken As String = ""
     'Beginn der Action
     Private Sub ViewerVisible(sender As Object, e As EventArgs) Handles MyBase.Shown
         Log("Tinder Autopilot Dashboard started")
@@ -18,12 +15,8 @@ Public Class MainViewer
             Directory.CreateDirectory(Application.StartupPath & "\swipes\")
         End If
     End Sub
-    Private Sub GetTinderMatch()
-
-    End Sub
-
     Private Sub FireSwitched(sender As Object, e As EventArgs) Handles FireSwitch.CheckedChanged
-        If LoggedIn = False Then
+        If _loggedIn = False Then
             FireSwitch.Checked = False
             Log("Can't start Autopilot. Please auth your account.")
             Return
@@ -38,7 +31,7 @@ Public Class MainViewer
             Log("Autopilot stopped")
         End If
     End Sub
-    Public Sub TinderAuth()
+    Private Sub TinderAuth()
         Try
             If Not TinderAuthBox.Text = "" Then
                 AuthWithTinderToken()
@@ -46,7 +39,7 @@ Public Class MainViewer
                 FacebookAuthBox.Enabled = False
                 TinderAuthBox.Enabled = False
                 SaveAuth.Enabled = False
-                LoggedIn = True
+                _loggedIn = True
                 Return
             ElseIf Not FacebookAuthBox.Text = "" Then
                 If Not FacebookAccIDBox.Text = "" Then
@@ -58,21 +51,21 @@ Public Class MainViewer
             Log(ex.Message)
         End Try
     End Sub
-    Public Sub AuthWithTinderToken()
+    Private Sub AuthWithTinderToken()
         Dim AuthRequest As New RestRequest("profile")
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
-        Dim answer As IRestResponse = Client.Execute(AuthRequest)
+        Dim answer As IRestResponse = _client.Execute(AuthRequest)
         MyProfile = answer.Content
         Log("Own Profile filled: " & answer.Content)
         Dim ProfileJson As JObject = JObject.Parse(MyProfile)
         CurrentUserLabel.Text = ProfileJson.SelectToken("name").ToString & " (" & String.Format("{0:dd/MM/yyyy}", ProfileJson.SelectToken("birth_date").ToString) & ")"
         Log("Success auth with Tinder Token")
     End Sub
-    Public Sub AuthWithFacebookToken()
+    Private Sub AuthWithFacebookToken()
         Dim AuthRequest As New RestRequest("auth")
         AuthRequest.AddParameter("facebook_token", FacebookAuthBox.Text)
         AuthRequest.AddParameter("facebook_id", FacebookAccIDBox.Text)
-        Dim answer As IRestResponse = Client.Execute(AuthRequest)
+        Dim answer As IRestResponse = _client.Execute(AuthRequest)
         MyProfile = answer.Content
         Log("Own Profile filled: " & answer.Content)
         Dim ProfileJson As JObject = JObject.Parse(MyProfile)
@@ -80,18 +73,18 @@ Public Class MainViewer
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
         Log("Success auth with Facebook Token")
     End Sub
-    Public Function GetTinderMeta() As JObject
+    Private Function GetTinderMeta() As JObject
         Dim AuthRequest As New RestRequest("meta")
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
-        Dim answer As IRestResponse = Client.Execute(AuthRequest)
+        Dim answer As IRestResponse = _client.Execute(AuthRequest)
         Log("Got own Meta Data: " & answer.Content)
         Dim AnswerJson As JObject = JObject.Parse(answer.Content)
         Return AnswerJson
     End Function
-    Public Function GetNewProfile() As String
+    Private Function GetNewProfile() As String
         Dim AuthRequest As New RestRequest("user/recs")
         AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
-        Dim answer As IRestResponse = Client.Execute(AuthRequest)
+        Dim answer As IRestResponse = _client.Execute(AuthRequest)
         Return answer.Content
     End Function
 
@@ -100,7 +93,7 @@ Public Class MainViewer
             If TinderWorker.CancellationPending = True Then
                 Return
             End If
-            Dim LikeHer As Boolean = False
+            Dim LikeHer = False
             Dim NewProfileString As String = GetNewProfile()
             Dim NewProfile As JObject = JObject.Parse(NewProfileString)
             Dim ResultSet As JObject = JObject.Parse(NewProfile.Item("results").Item(0).ToString)
@@ -120,13 +113,13 @@ Public Class MainViewer
             If LikeHer = True Then
                 Dim AuthRequest As New RestRequest("like/" & ProfileID)
                 AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
-                Dim answer As IRestResponse = Client.Execute(AuthRequest)
+                Dim answer As IRestResponse = _client.Execute(AuthRequest)
                 Console.WriteLine("Liked a Profile with ID " & ProfileID & " API Result: " & answer.Content)
                 ResultText = ProfileName & "-Liked-" & ProfileID
             Else
                 Dim AuthRequest As New RestRequest("pass/" & ProfileID)
                 AuthRequest.AddHeader("X-auth-token", My.Settings.TinderAuth)
-                Dim answer As IRestResponse = Client.Execute(AuthRequest)
+                Dim answer As IRestResponse = _client.Execute(AuthRequest)
                 Console.WriteLine("Pass a Profile with ID " & ProfileID & " API Result: " & answer.Content)
                 ResultText = ProfileName & "-Passed-" & ProfileID
             End If
@@ -145,12 +138,6 @@ Public Class MainViewer
             Thread.Sleep(10000)
         Loop
     End Sub
-    Public Sub SwipeRight(id As String)
-        'not needed
-    End Sub
-    Public Sub SwipeLeft(id As String)
-
-    End Sub
     Private Sub LoadForm(sender As Object, e As EventArgs) Handles MyBase.Load
         FacebookAuthBox.Text = My.Settings.FacebookAuth
         TinderAuthBox.Text = My.Settings.TinderAuth
@@ -160,9 +147,6 @@ Public Class MainViewer
         LogBox.AppendText(msg & vbNewLine)
         StatusLabel.Text = (msg)
         Console.WriteLine(msg)
-    End Sub
-    Public Sub StartTheWork()
-
     End Sub
     Private Sub SavingAuthCodes(sender As Object, e As EventArgs) Handles SaveAuth.Click
         Try

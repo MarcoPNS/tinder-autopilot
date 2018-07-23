@@ -80,7 +80,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("100001706025627")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property FacebookID() As String
             Get
                 Return CType(Me("FacebookID"),String)
